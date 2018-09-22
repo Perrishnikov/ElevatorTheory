@@ -1,13 +1,11 @@
 
 class Elevator {
   //Static Fields 
-  int xpos;
-  int ypos;
-  PVector loc; //testing PVectors instead of x and y
-  int high; // Height of this floor
-  int wide; // Width of this floor
-  
-  String id; // Name
+  PVector loc; // x and y of elevator
+  int high; // Height of this elevator
+  int wide; // Width of this elevator
+
+  String name; // Name
   int capacity; // Max number of Rider
   int maxSpeed = 10;
   int currentSpeed = 0;
@@ -16,13 +14,11 @@ class Elevator {
   int currentFloor;
   IntList floorQueue = new IntList(); 
 
-  Elevator(Integer id, int high, int xpos, int ypos) {
+  Elevator(String name, int high, PVector loc) {
     this.high = high;
-    this.wide = high;
-    this.id = "Cart " + id.toString();
-    this.xpos = xpos;
-    this.ypos = ypos;
-    this.loc = new PVector(xpos,ypos);
+    this.wide = 40;
+    this.name = name;
+    this.loc = loc;
   }
 
   void Update() {
@@ -56,6 +52,6 @@ class Elevator {
   }
 
   void Log() {
-    println(id + ", Height: " + height + ", xpos: " + xpos + ", ypos: " + ypos);
+    println(name + ", Height: " + height + ", xpos: " + loc.x + ", ypos: " + loc.y);
   }
 }

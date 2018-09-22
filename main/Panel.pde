@@ -3,31 +3,31 @@ class Panel {
   char upChar = '\u21E7'; //up arrow
   int upfill = 120; //color of up section
   boolean upIsPressed = false;
-  int upXpos;
-  int upYpos;
+  float upXpos;
+  float upYpos;
 
   int buttonSize = 20;
   ArrayList<Elevator> elevators = new ArrayList<Elevator>();
   int number; //Floor number
   String isPressedFill = "red";
-  int midFloorHt; //Y pos of the middle of the floor. For Panel
+  float midFloorHt; //Y pos of the middle of the floor. For Panel
   boolean isTopFloor = false;
   boolean isBottomFloor = false;
 
   char dnChar = '\u21E9'; //down arrow
   int dnfill = 150;
   boolean dnIsPressed = false;
-  int dnXpos;
-  int dnYpos;
+  float dnXpos;
+  float dnYpos;
 
-  Panel(int number, int ht, int xpos, int ypos, ArrayList<Elevator> elevators) {
+  Panel(int number, int ht, PVector loc, ArrayList<Elevator> elevators) {
     this.number = number;
-    this.midFloorHt = ypos - (ht /2);
-    this.upXpos = xpos;
-    this.upYpos = ypos;
+    this.midFloorHt = loc.y - (ht /2);
+    this.upXpos = loc.x;
+    this.upYpos = loc.y;
 
-    this.dnXpos = xpos;
-    this.dnYpos = ypos + buttonSize;
+    this.dnXpos = loc.x;
+    this.dnYpos = loc.y + buttonSize;
     this.elevators = elevators;
   }
 
