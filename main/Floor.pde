@@ -1,14 +1,13 @@
 class Floor {
-  private int number; // Floor Number (Ground == 0)
+  int number; // Floor Number (Ground == 0)
   int ht; // Height of this floor
   int width = 200; // Width of this floor 
   int xpos; // Left side of floor
   int ypos; //Top side of floor 
-  ArrayList riders = new ArrayList<Rider>();
-  private int fillColor = 255;
+  //ArrayList riders = new ArrayList<Rider>();
+  int fillColor = 255;
   int strokeColor = 0;
-  //ArrayList<Elevator> elevators = new ArrayList<Elevator>();
-  public Panel panel;
+  Panel panel;
 
   Floor(int number, int ht, int xpos, int ypos, ArrayList<Elevator> elevators) {
     this.number = number;
@@ -18,10 +17,10 @@ class Floor {
     this.panel = new Panel(number, this.ht, xpos, ypos, elevators);
   }
 
-  private Rider CreateRider() {
+  Rider CreateRider() {
     return new Rider();
   }
-  
+
   // Let's draw this floor
   void Display() {
     fill(this.fillColor);
@@ -33,7 +32,7 @@ class Floor {
   }
 
   //Let's draw this floor number
-  private void DisplayNumber() {
+  void DisplayNumber() {
     int xposN = xpos + this.width;
     int yposN = ypos + (this.ht /2);
     int size = width / 4;

@@ -3,39 +3,41 @@ int numElevators = 1; //Total elevators
 ArrayList<Floor> floors = new ArrayList<Floor>();
 ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 
+
 int mainLine; //pixels from the left to draw floors
-int floorHt = 50; //pixel height of each floor
+int floorHt = 100; //pixel height of each floor
+int elevatorHt = 80; //pixel height of elevator
+int scale = 1; //allows us to scale everything 
 int groundFloor; //pixels from bottom to draw ground
 
-Dot d;
+Dot d = new Dot();
 
 /* Run once at program start */
 void setup() {
-  //background(50);
   size(640, 640);
-  //mainLine = width/2; //must call width after size()
-  //groundFloor = height - floorHt; //must call height after siz()
-   d = new Dot();
-
-  frameRate(30);
-  //d.Show();
+  mainLine = width/2; //must call width after size()
+  groundFloor = height - floorHt; //must call height after size()
+  CreateFloors(floors, numFloors, floorHt);
+  CreateElevators(elevators, numElevators, floorHt);
+  frameRate(60);
 }
-
-
 
 
 /* Run every frame */
 void draw() {
   background(50);
+  DisplayGround(groundFloor);
+  DisplayFloors(floors);
+  DisplayElevator(elevators);
+
   d.Show();
-  //DisplayGround(groundFloor);
-  //CreateFloors(floors, numFloors, floorHt);
-  //DisplayFloors(floors);
-  //CreateElevators(elevators, numElevators, floorHt);
-  //DisplayElevator(elevators);
-  //println("ho");
-  //int draw = 0;
   d.Update();
+  
+  
+  for (Elevator e : elevators) {
+    //e.Move();
+    //e.Log();
+  }
   //ellipse(mouseX, mouseY, 80, 80);
   //for (Elevator e : elevators) {
   //  e.Move(mouseY);
@@ -48,18 +50,18 @@ void draw() {
 
 void mouseReleased() {
 
-  //for (Floor f : floors) {
-  //  //println("floor: " +f.number);
-  //  if (f.panel.CheckIfPressed(mouseX, mouseY)) {
-  //    //println("break on " + f.number);
-  //    f.panel.CallElevator(f.ypos);
-  //    break;
-  //  }
-  //}
+  for (Floor floor : floors) {
+    //println("floor: " +f.number);
+    if (floor.panel.IsPressed(mouseX, mouseY)) {
+      //println("break on " + f.number);
+      floor.panel.CallElevator(floor.number);
+      break;
+    }
+  }
 }
 
 void mouseClicked() {
-  println("x: " + mouseX + " y: " + mouseY);
+  //println("x: " + mouseX + " y: " + mouseY);
 }
 
 void CreateElevators(ArrayList<Elevator> elevators, int numElevators, int floorHt) {
