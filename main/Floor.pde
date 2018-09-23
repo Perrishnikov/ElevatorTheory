@@ -1,42 +1,35 @@
 class Floor {
-  private int number; // Floor Number (Ground == 0)
-  int ht; // Height of this floor
-  int width = 200; // Width of this floor 
-  int xpos; // Left side of floor
-  int ypos; //Top side of floor 
-  ArrayList riders = new ArrayList<Rider>();
-  private int fillColor = 255;
+  int number; // Floor Number (Ground == 0)
+  int high; // Height of this floor
+  int wide = 200; // Width of this floor 
+  int fillColor = 255;
   int strokeColor = 0;
-  //ArrayList<Elevator> elevators = new ArrayList<Elevator>();
-  public Panel panel;
+  Panel panel;
+  PVector loc; //this floors x and y
+  int elevatorStop; //the y height that the elevator needs to stop at to be even with floor
 
-  Floor(int number, int ht, int xpos, int ypos, ArrayList<Elevator> elevators) {
+  Floor(int number, int high, PVector loc, Elevator[] elevators, int estop) {
     this.number = number;
-    this.ht = ht;
-    this.xpos = xpos;
-    this.ypos = ypos;
-    this.panel = new Panel(number, this.ht, xpos, ypos, elevators);
+    this.high = high;
+    this.loc = loc;
+    this.elevatorStop = Math.round(loc.y) + Math.round(estop);
+    this.panel = new Panel(number, high, loc, elevators);
   }
 
-  private Rider CreateRider() {
-    return new Rider();
-  }
-  
   // Let's draw this floor
   void Display() {
     fill(this.fillColor);
     stroke(strokeColor);
-    rect(xpos, ypos, this.width, this.ht);
+    rect(loc.x, loc.y, this.wide, this.high);
     DisplayNumber();
     panel.Display();
-    //DisplayControlPanel();
   }
 
   //Let's draw this floor number
-  private void DisplayNumber() {
-    int xposN = xpos + this.width;
-    int yposN = ypos + (this.ht /2);
-    int size = width / 4;
+  void DisplayNumber() {
+    float xposN = loc.x + wide;
+    float yposN = loc.y + (high /2);
+    int size = wide / 4;
     int textSize = 32;
 
     //Make an ellipse
@@ -51,6 +44,6 @@ class Floor {
   }
 
   void Log() {
-    println("Floor #" + number + ", Height: " + height + ", xpos: " + xpos + ", ypos: " + ypos);
+    println("Floor #" + number + ", Height: " + high + ", xpos: " + loc.x + ", ypos: " + loc.y);
   }
 }

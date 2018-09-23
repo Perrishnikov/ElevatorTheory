@@ -1,49 +1,50 @@
-public class Panel {
+class Panel {
   //https://www.compart.com/en/unicode/html
   char upChar = '\u21E7'; //up arrow
   int upfill = 120; //color of up section
   boolean upIsPressed = false;
-  int upXpos;
-  int upYpos;
+  float upXpos;
+  float upYpos;
 
-  int buttonSize = 20;
-  ArrayList<Elevator> elevators = new ArrayList<Elevator>();
+  int buttonSize = 30;
+  Elevator[] elevators;
   int number; //Floor number
   String isPressedFill = "red";
-  int midFloorHt; //Y pos of the middle of the floor. For Panel
-  private boolean isTopFloor = false;
-  private boolean isBottomFloor = false;
+  float midFloorHt; //Y pos of the middle of the floor. For Panel
+  boolean isTopFloor = false;
+  boolean isBottomFloor = false;
 
   char dnChar = '\u21E9'; //down arrow
   int dnfill = 150;
   boolean dnIsPressed = false;
-  int dnXpos;
-  int dnYpos;
+  float dnXpos;
+  float dnYpos;
 
-  Panel(int number, int ht, int xpos, int ypos, ArrayList<Elevator> elevators) {
+  Panel(int number, int ht, PVector loc, Elevator[] elevators) {
     this.number = number;
-    this.midFloorHt = ypos - (ht /2);
-    this.upXpos = xpos;
-    //println("ht: " + ht + " ypos: " + ypos);
-    this.upYpos = ypos;
+    this.midFloorHt = loc.y - (ht /2);
+    this.upXpos = loc.x;
+    this.upYpos = loc.y;
 
-    this.dnXpos = xpos;
-    this.dnYpos = ypos + buttonSize;
+    this.dnXpos = loc.x;
+    this.dnYpos = loc.y + buttonSize;
     this.elevators = elevators;
   }
 
-  public void SetTopFloor() {
+  void SetTopFloor() {
     this.isTopFloor = true;
   }
 
-  public void SetBottomFloor() {
+  void SetBottomFloor() {
     this.isBottomFloor = true;
   }
 
-  public boolean CheckIfPressed(int mousex, int mousey) {
 
-    // I prolly want to return a floor or null...
-
+  /*
+  Checks to see if the mouse click was on a up or down button
+   Called in main.mouseReleased()
+   */
+  boolean IsPressed(int mousex, int mousey) {
     if ((mousex >= upXpos && mousex < (upXpos + buttonSize))  
       && (mousey >= upYpos && mousey < upYpos + buttonSize )) {
       println("Hit up on " + number);
@@ -57,14 +58,17 @@ public class Panel {
     }
   }
 
-  void CallElevator(int mousey) {
-    elevators.get(0).Move(mousey);
-    elevators.get(0).Activate();
+
+  /*
+  Called by main. Tells elevator to add this floor to its queue
+   */
+  void CallElevator(HashMap<String, Integer> hm) {
+    
+    elevators[0].QueueAdd(hm);
   }
 
 
   void Display() {
-
     //UP button and arrow
     if (!isTopFloor) {
       fill(upfill);
@@ -88,7 +92,7 @@ public class Panel {
     }
   }
 
-  public void Log() {
+  void Log() {
     println("Floor: " + number + " upXpos: " + upXpos + ", upYpos: " + upYpos + ", dnXpos: " + dnXpos + ", dnYpos: " + dnYpos);
   }
 }
