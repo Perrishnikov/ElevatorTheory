@@ -6,13 +6,13 @@ class Floor {
   int strokeColor = 0;
   Panel panel;
   PVector loc; //this floors x and y
-  float elevatorStop; //the y height that the elevator needs to stop at to be even with floor
+  int elevatorStop; //the y height that the elevator needs to stop at to be even with floor
 
-  Floor(int number, int high, PVector loc, ArrayList<Elevator> elevators, int estop) {
+  Floor(int number, int high, PVector loc, Elevator[] elevators, int estop) {
     this.number = number;
     this.high = high;
     this.loc = loc;
-    this.elevatorStop = loc.y - estop;
+    this.elevatorStop = Math.round(loc.y) + Math.round(estop);
     this.panel = new Panel(number, high, loc, elevators);
   }
 

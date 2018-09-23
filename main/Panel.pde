@@ -6,8 +6,8 @@ class Panel {
   float upXpos;
   float upYpos;
 
-  int buttonSize = 20;
-  ArrayList<Elevator> elevators = new ArrayList<Elevator>();
+  int buttonSize = 30;
+  Elevator[] elevators;
   int number; //Floor number
   String isPressedFill = "red";
   float midFloorHt; //Y pos of the middle of the floor. For Panel
@@ -20,7 +20,7 @@ class Panel {
   float dnXpos;
   float dnYpos;
 
-  Panel(int number, int ht, PVector loc, ArrayList<Elevator> elevators) {
+  Panel(int number, int ht, PVector loc, Elevator[] elevators) {
     this.number = number;
     this.midFloorHt = loc.y - (ht /2);
     this.upXpos = loc.x;
@@ -62,10 +62,9 @@ class Panel {
   /*
   Called by main. Tells elevator to add this floor to its queue
    */
-  void CallElevator(int destination) {
-    //elevator needs to know where to go. up or down
-    elevators.get(0).QueueAdd(destination);
-    //elevators.get(0).Move();
+  void CallElevator(HashMap<String, Integer> hm) {
+    
+    elevators[0].QueueAdd(hm);
   }
 
 

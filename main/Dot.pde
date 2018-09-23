@@ -3,24 +3,30 @@ class Dot {
   int posy = height/2;
   int speed = 5;
   PVector v1 = new PVector(0, 0);
-
+  PVector v;
   Dot() {
   }
 
   private void Show() {
+    
     //println("posy: " + posy);
     fill(225);
     stroke(0);
     ellipse(posx, posy, 80, 80);
-    rect(v1.x, v1.y, 100, 100);
+    //rect(v1.x, v1.y, 100, 100);
     fill(225, 0, 0);
     stroke(0);
-    rect(150, 150, 4, 4);
+    //rect(150, 150, 4, 4);
+    
+    
+    v = new PVector(10, 10, 0);
+    ellipse(v.x, v.y, 12, 12);
+    v.mult(10);
+    ellipse(v.x, v.y, 24, 24);
 
 
-
-    translate(100, 100);
-    rect(v1.x + 200, v1.y + 200, 100, 100);
+    //translate(100, 100);
+    //rect(v1.x + 200, v1.y + 200, 100, 100);
 
 
 

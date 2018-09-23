@@ -1,10 +1,10 @@
-int numFloors = 5; //Total floors
+int numFloors = 6; //Total floors
 int numElevators = 1; //Total elevators
-int elevatorStartFloor = 0; //Elevator starts here
+int elevatorStartFloor = 2; //Elevator starts here
 Floor[] floors = new Floor[numFloors];
 Elevator[] elevators = new Elevator[numElevators];
 
-int floorHt = 120; //pixel height of each floor
+int floorHt = 110; //pixel height of each floor
 int elevatorHt = 80; //pixel height of elevator
 int scale = 1; //allows us to scale everything
 
@@ -18,9 +18,9 @@ void setup() {
   size(640, 800);
   mainLine = width/2; //must call width after size()
   groundFloor = height - floorHt; //must call height after size()
-  CreateFloors(floors, numFloors, floorHt);
+  CreateFloors(floors, numFloors, floorHt, elevatorHt);
   CreateElevators(elevators, numElevators, elevatorHt);
-  frameRate(60);
+  //frameRate(60);
 }
 
 
@@ -34,50 +34,51 @@ void draw() {
   d.Show();
   d.Update();
 
-
   for (Elevator e : elevators) {
-    //e.Move();
-    //e.Log();
+    e.Update();
   }
-  //ellipse(mouseX, mouseY, 80, 80);
-  //for (Elevator e : elevators) {
-  //  e.Move(mouseY);
-  //}
-  //int p = 0;
-  //line(0, p, width, height);
-  //p++;
-  //println(frameRate);
 }
 
-void mouseReleased() {
 
+void mouseReleased() {
   for (Floor floor : floors) {
     if (floor.panel.IsPressed(mouseX, mouseY)) {
+      HashMap<String, Integer> hm = new HashMap<String, Integer>();
+      hm.put("floor", floor.number);
+      hm.put("estop", floor.elevatorStop);
+
       //println("break on " + f.number);
-      floor.panel.CallElevator(floor.number);
+      floor.panel.CallElevator(hm);
       break;
     }
   }
 }
 
+
 void mouseClicked() {
   //println("x: " + mouseX + " y: " + mouseY);
 }
 
-void CreateElevators(ArrayList<Elevator> elevators, int numElevators, int elevatorHt) {
+
+void CreateElevators(Elevator[] elevators, int numElevators, int elevatorHt) {
   PVector loc;
 
-  for (int i = 1; i <= numElevators; i++) {
-    Floor floor = floors.get(elevatorStartFloor);
-    //float startLoc = floor.elevatorStop;
-    loc = new PVector(mainLine, groundFloor - floorHt);
+  try {
+    for (int i = 0; i < numElevators; i++) {
+      int start = floors[elevatorStartFloor].elevatorStop;
 
-    elevators.add(new Elevator("Ross", elevatorHt, loc));
+      loc = new PVector(mainLine, start);
+
+      elevators[i] =new Elevator("Ross", elevatorHt, loc, elevatorStartFloor );
+    }
+  }
+  catch(Error e) {
+    println("Error: " + e);
   }
 }
 
 
-void DisplayElevator(ArrayList<Elevator> elevators) {
+void DisplayElevator(Elevator[] elevators) {
   for (Elevator e : elevators) {
     e.Display();
     //e.Log();
@@ -85,20 +86,17 @@ void DisplayElevator(ArrayList<Elevator> elevators) {
 }
 
 
-void CreateFloors(Floor[] floors, int numFloors, int floorHt) {
-  int xpos;
-  int ypos;
+void CreateFloors(Floor[] floors, int numFloors, int floorHt, int elevatorHt) {
   PVector loc;
   Floor f;
+  int estop = floorHt - elevatorHt;
 
   for (int floorNum = numFloors - 1; floorNum >= 0; floorNum--) {
     loc = new PVector(mainLine, groundFloor - (floorNum * floorHt) - floorHt);
-    //xpos = mainLine;
-    //ypos = groundFloor - (floorNum * floorHt) - floorHt;
 
     //If this is the top floor, dont make an UP button
-    f = new Floor(floorNum, floorHt, loc, elevators, floorHt - elevatorHt);
-    
+    f = new Floor(floorNum, floorHt, loc, elevators, estop);
+
     if (floorNum == 0) {
       f.panel.SetBottomFloor();
     }
@@ -113,7 +111,7 @@ void CreateFloors(Floor[] floors, int numFloors, int floorHt) {
 }
 
 
-void DisplayFloors(ArrayList<Floor> floors) {
+void DisplayFloors(Floor[] floors) {
   for (Floor f : floors) {
     f.Display();
     //f.Log();
