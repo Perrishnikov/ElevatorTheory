@@ -30,8 +30,6 @@ class Elevator {
    */
   void Update() {
 
-    //Log();
-
     //If there is a number in the list...
     if (floorQueue.size() > 0) {
 
@@ -50,6 +48,11 @@ class Elevator {
   }
 
 
+  /*
+    Checks to see if the next floor in queue is up or down and 
+    sets this.direction to "-1" for up, and "1" for down
+    Called from here in Update()
+   */
   void setDirection() {
 
     if (floorQueue.get(0).get("floor") > currentFloor) {
@@ -60,6 +63,10 @@ class Elevator {
   }
 
 
+  /*
+   Check to see if the elevator is at floor elevator stop.
+   Used here in elevator.update()
+   */
   boolean IsArrived(int estop) {
 
     if (direction == 1) {
@@ -77,6 +84,7 @@ class Elevator {
 
 
   /* 
+   Used to add a request to the end of the floor queue
    Called from panel.CallElevator()
    */
   void QueueAdd(HashMap<String, Integer> destination) {
@@ -88,6 +96,12 @@ class Elevator {
     }
   }
 
+
+  /*
+   Used to determine if the call for the elevator is made from the same floor its on.
+   If so, dont add it to the queue.
+   Called from here in QueueAdd()
+   */
   boolean IsSameFloor(int destFloor, int curFloor) {
     if (destFloor == curFloor) {
       return true;
@@ -96,7 +110,11 @@ class Elevator {
     }
   }
 
-  // Let's draw this floor
+
+  /*
+   Let's draw this floor
+   Called from Main draw()
+   */
   void Display() {
     fill(225);
     stroke(0);
@@ -104,8 +122,6 @@ class Elevator {
   }
 
   void Log() {
-    //println(name + ", Height: " + height + ", xpos: " + loc.x + ", ypos: " + loc.y);
-    //text(", 10, height -240);
     text("direction: " + direction, 10, height -240);
     text("currentFloor: " + currentFloor, 10, height -210);
     text("accel: " + acceleration.y, 10, height -180);
