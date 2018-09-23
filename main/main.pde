@@ -31,11 +31,16 @@ void draw() {
   DisplayFloors(floors);
   DisplayElevator(elevators);
 
+  UpdateElevators(elevators);
   d.Show();
   d.Update();
+}
 
+
+void UpdateElevators(Elevator[] elevators) {
   for (Elevator e : elevators) {
     e.Update();
+    e.Log();
   }
 }
 

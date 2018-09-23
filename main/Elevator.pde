@@ -30,7 +30,7 @@ class Elevator {
    */
   void Update() {
 
-    Log();
+    //Log();
 
     //If there is a number in the list...
     if (floorQueue.size() > 0) {
