@@ -7,7 +7,7 @@ class Elevator {
   String name; // Name
   PVector loc; // x and y of elevator
   int currentFloor;
-  
+
   int capacity; // Max number of Rider
   float maxSpeed = 5;
   PVector speed = new PVector(0, 0); //accumulated by adding acceleration every update
@@ -16,50 +16,35 @@ class Elevator {
 
   ArrayList<HashMap<String, Integer>> floorQueue = new ArrayList<HashMap<String, Integer>>(); 
 
-
   Elevator(String name, int high, PVector loc, int elevatorStartFloor) {
     this.high = high;
     this.wide = 40;
     this.name = name;
     this.loc = loc;
     this.currentFloor = elevatorStartFloor;
-    //this.speed = new PVector(0, 0);
-    //this.acceleration = new PVector(0, .1);
-    //this.direction = 0;
   }
 
 
   /*
-Called by main in draw()
+   Called by main in draw()
    */
   void Update() {
 
     Log();
 
-    //If there is a number in the list, and it's not the current floor
+    //If there is a number in the list...
     if (floorQueue.size() > 0) {
 
       setDirection();
-
-      PVector move;
-      if (direction == -1) {
-        //sub if going up (-1)
-        move = speed.sub(acceleration);
-      } else {
-        move = speed.add(acceleration);
-      }
-
-      speed.limit(maxSpeed);
-
-      loc.add(move);
-
+      PVector move = speed.add(PVector.mult(acceleration, direction));
       int estop = floorQueue.get(0).get("estop");
+      speed.limit(maxSpeed);
+      loc.add(move);
 
       if (IsArrived(estop)) {
         this.speed = new PVector(0, 0);
         this.currentFloor = floorQueue.get(0).get("floor");
         this.floorQueue.remove(0);
-
       }
     }
   }
@@ -91,6 +76,9 @@ Called by main in draw()
   }
 
 
+  /* 
+   Called from panel.CallElevator()
+   */
   void QueueAdd(HashMap<String, Integer> destination) {
 
     if (!IsSameFloor(destination.get("floor"), currentFloor )) {
