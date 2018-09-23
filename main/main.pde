@@ -15,7 +15,7 @@ Dot d = new Dot(); //TEST
 
 /* Run once at program start */
 void setup() {
-  size(640, 800);
+  size(840, 900);
   mainLine = width/2; //must call width after size()
   groundFloor = height - floorHt; //must call height after size()
   CreateFloors(floors, numFloors, floorHt, elevatorHt);
@@ -32,8 +32,8 @@ void draw() {
   DisplayElevator(elevators);
 
   UpdateElevators(elevators);
-  d.Show();
-  d.Update();
+  d.Show();//TEST
+  d.Update();//TEST
 }
 
 
@@ -52,7 +52,6 @@ void mouseReleased() {
       hm.put("floor", floor.number);
       hm.put("estop", floor.elevatorStop);
 
-      //println("break on " + f.number);
       floor.panel.CallElevator(hm);
       break;
     }
@@ -86,7 +85,6 @@ void CreateElevators(Elevator[] elevators, int numElevators, int elevatorHt) {
 void DisplayElevator(Elevator[] elevators) {
   for (Elevator e : elevators) {
     e.Display();
-    //e.Log();
   }
 }
 
@@ -119,7 +117,6 @@ void CreateFloors(Floor[] floors, int numFloors, int floorHt, int elevatorHt) {
 void DisplayFloors(Floor[] floors) {
   for (Floor f : floors) {
     f.Display();
-    //f.Log();
   }
 }
 
