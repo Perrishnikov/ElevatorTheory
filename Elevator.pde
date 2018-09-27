@@ -9,7 +9,7 @@ class Elevator {
   int currentFloor;
 
   int capacity; // Max number of Rider
-  float maxSpeed = 5;
+  float maxSpeed = 4;
   PVector speed = new PVector(0, 0); //accumulated by adding acceleration every update
   PVector acceleration = new PVector(0, .1);
   int direction = 0;
@@ -64,7 +64,7 @@ class Elevator {
 
 
   /*
-   Check to see if the elevator is at floor elevator stop.
+   Check to see if the elevator is at floor's elevator stop.
    Used here in elevator.update()
    */
   boolean IsArrived(int estop) {
@@ -86,6 +86,8 @@ class Elevator {
   /* 
    Used to add a request to the end of the floor queue
    Called from panel.CallElevator()
+   Rule: 
+     Dont add a floor if its the same one as its stopped on
    */
   void QueueAdd(HashMap<String, Integer> destination) {
 
@@ -120,6 +122,7 @@ class Elevator {
     stroke(0);
     rect(loc.x - wide, loc.y, wide, high);
   }
+
 
   void Log() {
     text("direction: " + direction, 10, height -240);

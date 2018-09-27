@@ -15,7 +15,7 @@ class Dot {
     ellipse(posx, posy, 80, 80);
     //rect(v1.x, v1.y, 100, 100);
     fill(225, 0, 0);
-    stroke(0);
+    stroke(10);
     //rect(150, 150, 4, 4);
     
     
